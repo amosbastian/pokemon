@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pokemon/configuration": ["libs/configuration/src/index.ts"]
+      "@pokemon/configuration": ["libs/configuration/src/index.ts"],
+      "@pokemon/ui": ["libs/ui/src/index.ts"],
+      "@pokemon/ui/server": ["libs/ui/src/server.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
