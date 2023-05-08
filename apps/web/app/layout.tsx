@@ -1,8 +1,8 @@
 import { BASE_URL, BRAND_DESCRIPTION, BRAND_NAME } from "@pokemon/configuration";
-import { ThemeProvider, ThemeToggle } from "@pokemon/ui";
+import { ButtonLink, ThemeProvider, ThemeToggle } from "@pokemon/ui";
+import { Home } from "lucide-react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Link from "next/link";
 import "./styles.css";
 
 // If loading a variable font, you don't need to specify the font weight
@@ -24,12 +24,17 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
       <body className="h-full">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="dark:bg-gray-1 h-full bg-white">
-            <header>
-              <nav className="mx-auto flex max-w-2xl items-center justify-between gap-x-6 py-6" aria-label="Global">
+            <header className="absolute inset-x-0 top-0 z-50 py-5">
+              <nav className="mx-auto flex max-w-2xl items-center justify-between gap-x-6" aria-label="Global">
                 <div className="flex lg:flex-1">
-                  <Link href="/" className="-m-1.5 p-1.5">
-                    Pokemon
-                  </Link>
+                  <ButtonLink
+                    href="/"
+                    variant="ghost"
+                    className="group flex h-7 w-7 items-center justify-center rounded-md p-0 transition"
+                    aria-label="Go home"
+                  >
+                    <Home className="text-slate-11 group-hover:text-slate-12 absolute h-4 w-4" />
+                  </ButtonLink>
                 </div>
 
                 <div className="flex flex-1 items-center justify-end gap-x-6">
@@ -37,7 +42,7 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
                 </div>
               </nav>
             </header>
-            <main className="mx-auto max-w-2xl py-8">
+            <main className="mx-auto h-full max-w-2xl pb-4 pt-16">
               {modal}
               {children}
             </main>
