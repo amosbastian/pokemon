@@ -1,5 +1,5 @@
 import { db, pokemonTable, pokemonTypesTable, typesTable } from "@pokemon/db";
-import { PokemonType, Search } from "@pokemon/ui";
+import { PokemonType, PokemonTypesComboBox, Search } from "@pokemon/ui";
 import { InferModel, eq, placeholder, sql } from "drizzle-orm";
 import { ChevronRightIcon, SearchIcon } from "lucide-react";
 import Image from "next/image";
@@ -10,6 +10,8 @@ type Type = InferModel<typeof typesTable>;
 
 export default async function Page({ searchParams }: { searchParams: { search?: string } }) {
   const search = searchParams.search;
+
+  const types = db.select().from(typesTable).all();
 
   let pokemonList: { pokemon: Pokemon; type: Type | null }[];
 
@@ -38,26 +40,32 @@ export default async function Page({ searchParams }: { searchParams: { search?: 
       .all();
   }
 
-  const result = pokemonList.reduce<Record<number, { pokemon: Pokemon; types: Type[] }>>((accumulator, row) => {
-    const pokemon = row.pokemon;
-    const type = row.type;
+  const reducedPokemonList = pokemonList.reduce<Record<number, { pokemon: Pokemon; types: Type[] }>>(
+    (accumulator, row) => {
+      const pokemon = row.pokemon;
+      const type = row.type;
 
-    if (!accumulator[pokemon.id]) {
-      accumulator[pokemon.id] = { pokemon, types: [] };
-    }
+      if (!accumulator[pokemon.id]) {
+        accumulator[pokemon.id] = { pokemon, types: [] };
+      }
 
-    if (type) {
-      accumulator[pokemon.id].types.push(type);
-    }
+      if (type) {
+        accumulator[pokemon.id].types.push(type);
+      }
 
-    return accumulator;
-  }, {});
+      return accumulator;
+    },
+    {},
+  );
 
-  const pokemon = Object.values(result);
+  const pokemon = Object.values(reducedPokemonList);
 
   return (
     <>
-      <Search defaultValue={search} />
+      <div className="grid grid-cols-2 gap-4">
+        <Search defaultValue={search} />
+        <PokemonTypesComboBox types={types} />
+      </div>
       <ul
         role="list"
         className="divide-gray-3 dark:bg-gray-2 ring-gray-3 h-full max-h-full divide-y overflow-auto bg-white shadow-sm ring-1 sm:rounded-xl"

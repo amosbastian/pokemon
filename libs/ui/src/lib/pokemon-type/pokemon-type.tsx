@@ -1,4 +1,4 @@
-const ColorMap: Record<string, string> = {
+export const ColorMap: Record<string, string> = {
   normal: "fill-neutral-500 dark:fill-neutral-400",
   fighting: "fill-orange-500 dark:fill-orange-400",
   flying: "fill-sky-500 dark:fill-sky-400",
@@ -28,7 +28,7 @@ export const PokemonType = ({ type }: { type: Type }) => {
   return (
     <span
       key={type.id}
-      className="text-slate-12 ring-gray-4 inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset"
+      className="text-slate-12 ring-gray-4 inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-xs font-medium capitalize ring-1 ring-inset"
     >
       <svg className={`h-1.5 w-1.5 ${ColorMap[type.name]}`} viewBox="0 0 6 6" aria-hidden="true">
         <circle cx={3} cy={3} r={3} />

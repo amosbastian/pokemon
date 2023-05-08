@@ -9,10 +9,12 @@
   "dependencies": {
     "@nx/next": "16.1.2",
     "@radix-ui/react-dialog": "^1.0.3",
+    "@radix-ui/react-popover": "^1.0.5",
     "@swc/helpers": "~0.5.1",
     "@tw-classed/react": "^1.4.4",
     "better-sqlite3": "^8.3.0",
     "clsx": "^1.2.1",
+    "cmdk": "^0.2.0",
     "drizzle-orm": "^0.25.4",
     "framer-motion": "^10.12.8",
     "lucide-react": "^0.214.0",
