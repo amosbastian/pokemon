@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { pokemon, pokemonTypes, types } from "./schema";
+import { pokemonTable, pokemonTypesTable, typesTable } from "./schema";
 
 export interface AllPokemonResponse {
   count: number;
@@ -82,7 +82,7 @@ export default async function seed() {
       id: pokemonResponse.id,
     };
 
-    db.insert(pokemon).values(values).onConflictDoUpdate({ target: pokemon.id, set: values }).run();
+    db.insert(pokemonTable).values(values).onConflictDoUpdate({ target: pokemonTable.id, set: values }).run();
 
     for (let j = 0; j < pokemonResponse.types.length; j++) {
       const { type } = pokemonResponse.types[j];
@@ -94,12 +94,12 @@ export default async function seed() {
         continue;
       }
 
-      db.insert(types)
+      db.insert(typesTable)
         .values({ id: typeId, name: type.name })
-        .onConflictDoUpdate({ target: types.id, set: { id: typeId, name: type.name } })
+        .onConflictDoUpdate({ target: typesTable.id, set: { id: typeId, name: type.name } })
         .run();
 
-      db.insert(pokemonTypes)
+      db.insert(pokemonTypesTable)
         .values({ pokemonId: pokemonResponse.id, typeId })
         // .onConflictDoUpdate({
         //   target: [pokemonTypes.pokemonId, pokemonTypes.typeId],

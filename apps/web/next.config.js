@@ -17,6 +17,16 @@ const nextConfig = {
     appDir: true,
     serverComponentsExternalPackages: ["better-sqlite3"],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+        pathname: "/PokeAPI/sprites/master/sprites/pokemon/**",
+      },
+    ],
+  },
 };
 
 const plugins = [

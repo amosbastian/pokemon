@@ -1,6 +1,6 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const pokemon = sqliteTable("pokemon", {
+export const pokemonTable = sqliteTable("pokemon", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
   weight: integer("weight").notNull(),
@@ -14,22 +14,22 @@ export const pokemon = sqliteTable("pokemon", {
   sprite: text("sprite").notNull(),
 });
 
-export const pokemonTypes = sqliteTable(
+export const pokemonTypesTable = sqliteTable(
   "pokemon_types",
   {
     pokemonId: integer("pokemon_id")
       .notNull()
-      .references(() => pokemon.id),
+      .references(() => pokemonTable.id),
     typeId: integer("type_id")
       .notNull()
-      .references(() => types.id),
+      .references(() => typesTable.id),
   },
   // (table) => ({
   //   compositePk: primaryKey(table.pokemonId, table.typeId),
   // }),
 );
 
-export const types = sqliteTable("types", {
+export const typesTable = sqliteTable("types", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
 });
