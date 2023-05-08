@@ -23,7 +23,7 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
     >
       <body className="h-full">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="h-full bg-white dark:bg-zinc-900">
+          <div className="dark:bg-gray-1 h-full bg-white">
             <header>
               <nav className="mx-auto flex max-w-2xl items-center justify-between gap-x-6 py-6" aria-label="Global">
                 <div className="flex lg:flex-1">
