@@ -18,7 +18,8 @@
       "@pokemon/configuration": ["libs/configuration/src/index.ts"],
       "@pokemon/db": ["libs/db/src/index.ts"],
       "@pokemon/ui": ["libs/ui/src/index.ts"],
-      "@pokemon/ui/server": ["libs/ui/src/server.ts"]
+      "@pokemon/ui/server": ["libs/ui/src/server.ts"],
+      "@pokemon/utility/shared": ["libs/utility/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
