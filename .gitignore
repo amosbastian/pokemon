@@ -41,4 +41,8 @@ Thumbs.db
 # Next.js
 .next
 
+# Env
 .env
+
+# Database
+sqlite.db

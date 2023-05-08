@@ -12,8 +12,10 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  reactStrictMode: true,
   experimental: {
     appDir: true,
+    serverComponentsExternalPackages: ["better-sqlite3"],
   },
 };
 
