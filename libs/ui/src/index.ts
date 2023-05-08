@@ -2,6 +2,7 @@
 
 export * from "./lib/button/button";
 export * from "./lib/dialog/dialog";
+export * from "./lib/poke-balls/poke-balls";
 export * from "./lib/pokemon-dialog/pokemon-dialog";
 export * from "./lib/search/search";
 export * from "./lib/theme-provider/theme-provider";
