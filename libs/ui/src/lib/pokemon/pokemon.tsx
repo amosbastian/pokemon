@@ -118,7 +118,7 @@ export async function Pokemon({ id }: PokemonProps) {
   }
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex w-full flex-col gap-4">
       <div className="flex flex-row gap-4">
         <Image
           className="bg-gray-2 dark:bg-gray-4 h-12 w-12 flex-none rounded-full"

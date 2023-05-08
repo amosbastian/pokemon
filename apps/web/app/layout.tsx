@@ -42,7 +42,7 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
                 </div>
               </nav>
             </header>
-            <main className="mx-auto grid h-full max-w-2xl grid-rows-[max-content_minmax(0px,_1fr)_max-content] gap-4 pb-4 pt-16">
+            <main className="mx-auto flex h-full max-w-2xl flex-col gap-4 pb-4 pt-16">
               {modal}
               {children}
               <PokeBalls />
