@@ -1,9 +1,10 @@
 import { db, pokemonTable, pokemonTypesTable, typesTable } from "@pokemon/db";
-import { eq } from "drizzle-orm";
+import { eq, sql, placeholder } from "drizzle-orm";
 import { ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { InferModel } from "drizzle-orm";
+import { Search } from "@pokemon/ui";
 
 type Pokemon = InferModel<typeof pokemonTable>;
 type Type = InferModel<typeof typesTable>;
@@ -29,16 +30,35 @@ const ColorMap: Record<string, string> = {
   fairy: "fill-pink-500 dark:fill-pink-400",
 };
 
-export default async function Page() {
-  const pokemonList = db
-    .select({
-      pokemon: pokemonTable,
-      type: typesTable,
-    })
-    .from(pokemonTable)
-    .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
-    .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id))
-    .all();
+export default async function Page({ searchParams }: { searchParams: { search?: string } }) {
+  const search = searchParams.search;
+
+  let pokemonList: { pokemon: Pokemon; type: Type | null }[];
+
+  // TODO: figure out better where to do conditional .where()
+  if (search) {
+    pokemonList = db
+      .select({
+        pokemon: pokemonTable,
+        type: typesTable,
+      })
+      .from(pokemonTable)
+      .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
+      .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id))
+      .where(sql`lower(${pokemonTable.name}) like ${placeholder("name")}`)
+      .prepare()
+      .all({ name: `%${search}%` });
+  } else {
+    pokemonList = db
+      .select({
+        pokemon: pokemonTable,
+        type: typesTable,
+      })
+      .from(pokemonTable)
+      .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
+      .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id))
+      .all();
+  }
 
   const result = pokemonList.reduce<Record<number, { pokemon: Pokemon; types: Type[] }>>((accumulator, row) => {
     const pokemon = row.pokemon;
@@ -57,7 +77,9 @@ export default async function Page() {
 
   return (
     <div>
-      <div className="hidden sm:mb-8 sm:flex sm:justify-center">Example</div>
+      <div className="mb-4">
+        <Search defaultValue={search} />
+      </div>
       <ul
         role="list"
         className="divide-gray-3 dark:bg-gray-2 ring-gray-3 max-h-80 divide-y overflow-auto bg-white shadow-sm ring-1 sm:rounded-xl"
