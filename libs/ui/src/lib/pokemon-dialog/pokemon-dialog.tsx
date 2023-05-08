@@ -20,7 +20,7 @@ export async function PokemonDialog({ children }: PokemonDialogProps) {
       }}
     >
       <DialogContent className="sm:max-w-[425px]">
-        <div className="grid gap-4 py-4">{children}</div>
+        <div className="grid gap-4">{children}</div>
       </DialogContent>
     </Dialog>
   );

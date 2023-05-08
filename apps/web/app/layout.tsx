@@ -1,5 +1,5 @@
 import { BASE_URL, BRAND_DESCRIPTION, BRAND_NAME } from "@pokemon/configuration";
-import { ButtonLink, ThemeProvider, ThemeToggle } from "@pokemon/ui";
+import { ButtonLink, PokeBalls, ThemeProvider, ThemeToggle } from "@pokemon/ui";
 import { Home } from "lucide-react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -42,9 +42,10 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
                 </div>
               </nav>
             </header>
-            <main className="mx-auto h-full max-w-2xl pb-4 pt-16">
+            <main className="mx-auto grid h-full max-w-2xl grid-rows-[max-content_minmax(0px,_1fr)_max-content] gap-4 pb-4 pt-16">
               {modal}
               {children}
+              <PokeBalls />
             </main>
           </div>
         </ThemeProvider>
