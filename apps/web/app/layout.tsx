@@ -55,6 +55,7 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: {
     default: BRAND_NAME,
     template: `%s | ${BRAND_NAME}`,

@@ -2,6 +2,8 @@
 
 export * from "./lib/button/button";
 export * from "./lib/dialog/dialog";
+export * from "./lib/github-button/github-button";
+export * from "./lib/input/input";
 export * from "./lib/poke-balls/poke-balls";
 export * from "./lib/pokemon-dialog/pokemon-dialog";
 export * from "./lib/pokemon-type/pokemon-type";
