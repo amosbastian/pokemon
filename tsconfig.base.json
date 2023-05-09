@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@pokemon/configuration": ["libs/configuration/src/index.ts"],
+      "@pokemon/configuration/server": ["libs/configuration/src/server.ts"],
       "@pokemon/db": ["libs/db/src/index.ts"],
       "@pokemon/ui": ["libs/ui/src/index.ts"],
       "@pokemon/ui/server": ["libs/ui/src/server.ts"],
