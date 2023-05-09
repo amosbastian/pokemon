@@ -3,6 +3,7 @@ import { HomeIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { ButtonLink } from "../button/button";
 import { ThemeToggle } from "../theme-toggle/theme-toggle";
+import { UserButton } from "../user-button/user-button";
 
 export async function Header() {
   const session = await getServerSession(nextAuthOptions);
@@ -23,7 +24,7 @@ export async function Header() {
 
         <div className="flex flex-1 items-center justify-end gap-x-6">
           <ThemeToggle />
-          {session ? null : <ButtonLink href="/sign-in"></ButtonLink>}
+          {session && session.user ? <UserButton user={session.user} /> : <ButtonLink href="/sign-in"></ButtonLink>}
         </div>
       </nav>
     </header>

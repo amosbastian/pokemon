@@ -36,7 +36,7 @@ export const typesTable = sqliteTable("types", {
 });
 
 // NextAuth
-export const users = sqliteTable("users", {
+export const usersTable = sqliteTable("users", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
   email: text("email").notNull(),
@@ -44,12 +44,12 @@ export const users = sqliteTable("users", {
   image: text("image"),
 });
 
-export const accounts = sqliteTable(
+export const accountsTable = sqliteTable(
   "accounts",
   {
     userId: text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .references(() => usersTable.id, { onDelete: "cascade" }),
     type: text("type").$type<ProviderType>().notNull(),
     provider: text("provider").notNull(),
     providerAccountId: text("providerAccountId").notNull(),
@@ -66,15 +66,15 @@ export const accounts = sqliteTable(
   }),
 );
 
-export const sessions = sqliteTable("sessions", {
+export const sessionsTable = sqliteTable("sessions", {
   sessionToken: text("sessionToken").notNull().primaryKey(),
   userId: text("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => usersTable.id, { onDelete: "cascade" }),
   expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
 });
 
-export const verificationTokens = sqliteTable(
+export const verificationTokensTable = sqliteTable(
   "verificationToken",
   {
     identifier: text("identifier").notNull(),
