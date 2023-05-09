@@ -27,7 +27,7 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(({ classNa
 
   return (
     <Input
-      placeholder="Search Pokemon"
+      placeholder="Search Pokémon"
       className={className}
       onChange={onChange}
       ref={ref}

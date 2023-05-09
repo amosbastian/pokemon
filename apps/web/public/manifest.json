@@ -1,6 +1,6 @@
 {
-  "name": "Pokemon app with Next.js 13 and Drizzle",
-  "short_name": "Pokemon",
+  "name": "Pokémon app with Next.js 13 and Drizzle",
+  "short_name": "Pokémon",
   "icons": [
     { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
