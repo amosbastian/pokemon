@@ -11,7 +11,15 @@ const inter = Inter({
   display: "swap",
 });
 
-export default function RootLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+export default function RootLayout({
+  children,
+  signInModal,
+  pokemonModal,
+}: {
+  children: React.ReactNode;
+  signInModal: React.ReactNode;
+  pokemonModal: React.ReactNode;
+}) {
   return (
     // Note! If you do not add suppressHydrationWarning to your <html> you will get warnings
     // because next-themes updates that element. This property only applies one level deep,
@@ -27,8 +35,9 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
             {/* @ts-expect-error Server component */}
             <Header />
             <main className="mx-auto flex h-full max-w-2xl flex-col gap-4 pb-4 pt-16">
-              {modal}
+              {pokemonModal}
               {children}
+              {signInModal}
               <PokeBalls />
             </main>
           </div>

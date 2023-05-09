@@ -1,12 +1,11 @@
-import { PokemonDialog } from "@pokemon/ui";
+import { InterceptDialog } from "@pokemon/ui";
 import { Pokemon } from "@pokemon/ui/server";
 
 export default async function Page({ params }: { params: { id: number } }) {
   return (
-    // @ts-expect-error Server component
-    <PokemonDialog>
+    <InterceptDialog>
       {/* @ts-expect-error Server component */}
       <Pokemon id={params.id} />
-    </PokemonDialog>
+    </InterceptDialog>
   );
 }
