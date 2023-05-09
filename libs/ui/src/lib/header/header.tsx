@@ -22,9 +22,13 @@ export async function Header() {
           </ButtonLink>
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-x-6">
+        <div className="flex flex-1 items-center justify-end gap-x-2">
           <ThemeToggle />
-          {session && session.user ? <UserButton user={session.user} /> : <ButtonLink href="/sign-in"></ButtonLink>}
+          {session && session.user ? (
+            <UserButton user={session.user} />
+          ) : (
+            <ButtonLink href="/sign-in">Sign in</ButtonLink>
+          )}
         </div>
       </nav>
     </header>

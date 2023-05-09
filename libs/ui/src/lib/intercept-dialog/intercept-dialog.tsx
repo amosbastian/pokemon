@@ -3,11 +3,11 @@
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent } from "../dialog/dialog";
 
-interface PokemonDialogProps {
+interface InterceptDialogProps {
   children: React.ReactNode;
 }
 
-export async function PokemonDialog({ children }: PokemonDialogProps) {
+export function InterceptDialog({ children }: InterceptDialogProps) {
   const router = useRouter();
 
   return (
