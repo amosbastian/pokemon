@@ -1,64 +1,13 @@
-import { db, pokemonTable, pokemonTypesTable, typesTable } from "@pokemon/db";
+import { db, getAllPokemon, typesTable } from "@pokemon/db";
 import { PokemonType, PokemonTypesComboBox, Search } from "@pokemon/ui";
-import { InferModel, eq, placeholder, sql } from "drizzle-orm";
 import { ChevronRightIcon, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-type Pokemon = InferModel<typeof pokemonTable>;
-type Type = InferModel<typeof typesTable>;
-
 export default async function Page({ searchParams }: { searchParams: { search?: string } }) {
   const search = searchParams.search;
-
   const types = db.select().from(typesTable).all();
-
-  let pokemonList: { pokemon: Pokemon; type: Type | null }[];
-
-  // TODO: figure out better where to do conditional .where()
-  if (search) {
-    pokemonList = db
-      .select({
-        pokemon: pokemonTable,
-        type: typesTable,
-      })
-      .from(pokemonTable)
-      .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
-      .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id))
-      .where(sql`lower(${pokemonTable.name}) like ${placeholder("name")}`)
-      .prepare()
-      .all({ name: `%${search}%` });
-  } else {
-    pokemonList = db
-      .select({
-        pokemon: pokemonTable,
-        type: typesTable,
-      })
-      .from(pokemonTable)
-      .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
-      .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id))
-      .all();
-  }
-
-  const reducedPokemonList = pokemonList.reduce<Record<number, { pokemon: Pokemon; types: Type[] }>>(
-    (accumulator, row) => {
-      const pokemon = row.pokemon;
-      const type = row.type;
-
-      if (!accumulator[pokemon.id]) {
-        accumulator[pokemon.id] = { pokemon, types: [] };
-      }
-
-      if (type) {
-        accumulator[pokemon.id].types.push(type);
-      }
-
-      return accumulator;
-    },
-    {},
-  );
-
-  const pokemon = Object.values(reducedPokemonList);
+  const pokemon = getAllPokemon(search);
 
   return (
     <>

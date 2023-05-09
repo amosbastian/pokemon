@@ -1,10 +1,6 @@
-import { db, pokemonTable, pokemonTypesTable, typesTable } from "@pokemon/db";
-import { InferModel, eq } from "drizzle-orm";
+import { getSinglePokemon } from "@pokemon/db";
 import Image from "next/image";
 import { PokemonType } from "../pokemon-type/pokemon-type";
-
-type Pokemon = InferModel<typeof pokemonTable>;
-type Type = InferModel<typeof typesTable>;
 
 type Statistic = "hp" | "attack" | "defense" | "specialAttack" | "specialDefense" | "speed";
 
@@ -59,59 +55,12 @@ const StatisticBar = ({ statistic, value }: { statistic: Statistic; value: numbe
 
 const MAX_VALUE = 255;
 
-const ColorMap: Record<string, string> = {
-  normal: "fill-neutral-500 dark:fill-neutral-400",
-  fighting: "fill-orange-500 dark:fill-orange-400",
-  flying: "fill-sky-500 dark:fill-sky-400",
-  poison: "fill-fuchsia-500 dark:fill-fuchsia-400",
-  ground: "fill-amber-500 dark:fill-amber-400",
-  rock: "fill-orange-500 dark:fill-orange-400",
-  bug: "fill-lime-500 dark:fill-lime-400",
-  ghost: "fill-violet-500 dark:fill-violet-400",
-  steel: "fill-zinc-500 dark:fill-zinc-400",
-  fire: "fill-red-500 dark:fill-red-400",
-  water: "fill-blue-500 dark:fill-blue-400",
-  grass: "fill-green-500 dark:fill-green-400",
-  electric: "fill-yellow-500 dark:fill-yellow-400",
-  psychic: "fill-pink-500 dark:fill-pink-400",
-  ice: "fill-cyan-500 dark:fill-cyan-400",
-  dragon: "fill-purple-500 dark:fill-purple-400",
-  dark: "fill-gray-500 dark:fill-gray-400",
-  fairy: "fill-pink-500 dark:fill-pink-400",
-};
-
 interface PokemonProps {
   id: number;
 }
 
 export async function Pokemon({ id }: PokemonProps) {
-  const rows = db
-    .select({
-      pokemon: pokemonTable,
-      type: typesTable,
-    })
-    .from(pokemonTable)
-    .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
-    .leftJoin(typesTable, eq(typesTable.id, pokemonTypesTable.typeId))
-    .where(eq(pokemonTable.id, id))
-    .all();
-
-  const result = rows.reduce<Record<number, { pokemon: Pokemon; types: Type[] }>>((accumulator, row) => {
-    const pokemon = row.pokemon;
-    const type = row.type;
-
-    if (!accumulator[pokemon.id]) {
-      accumulator[pokemon.id] = { pokemon, types: [] };
-    }
-
-    if (type) {
-      accumulator[pokemon.id].types.push(type);
-    }
-
-    return accumulator;
-  }, {});
-
-  const { pokemon, types } = result[id];
+  const { pokemon, types } = getSinglePokemon(id) ?? {};
 
   if (!pokemon || !types) {
     return null;
