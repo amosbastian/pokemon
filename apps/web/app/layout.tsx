@@ -39,12 +39,29 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
   title: {
     default: BRAND_NAME,
     template: `%s | ${BRAND_NAME}`,
   },
   description: BRAND_DESCRIPTION,
+  metadataBase: new URL(BASE_URL),
+  authors: [
+    {
+      name: "Amos Bastian",
+      url: "https://amosbastian.com",
+    },
+  ],
+  keywords: [
+    "Next.js",
+    "React",
+    "Tailwind CSS",
+    "Server Components",
+    "Radix UI",
+    "Drizzle ORM",
+    "Server Actions",
+    "Parallel Routes",
+    "shadcn UI",
+  ],
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -79,8 +96,12 @@ export const metadata: Metadata = {
     title: BRAND_NAME,
     description: BRAND_DESCRIPTION,
     card: "summary_large_image",
+    creator: "@amosbastian",
   },
   icons: {
-    shortcut: "/favicon.ico",
+    icon: "/favicon.ico",
+    shortcut: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
   },
+  manifest: `${BASE_URL}/site.webmanifest`,
 };
