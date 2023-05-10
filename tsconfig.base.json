@@ -18,6 +18,8 @@
       "@pokemon/configuration": ["libs/configuration/src/index.ts"],
       "@pokemon/configuration/server": ["libs/configuration/src/server.ts"],
       "@pokemon/db": ["libs/db/src/index.ts"],
+      "@pokemon/feature/pokemon-team": ["libs/feature/pokemon-team/src/index.ts"],
+      "@pokemon/feature/pokemon-team/server": ["libs/feature/pokemon-team/src/server.ts"],
       "@pokemon/ui": ["libs/ui/src/index.ts"],
       "@pokemon/ui/server": ["libs/ui/src/server.ts"],
       "@pokemon/utility/shared": ["libs/utility/shared/src/index.ts"]
