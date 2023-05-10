@@ -15,6 +15,13 @@
       "when": 1683653617899,
       "tag": "0001_light_night_nurse",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1683747794213,
+      "tag": "0002_simple_nightcrawler",
+      "breakpoints": true
     }
   ]
 }

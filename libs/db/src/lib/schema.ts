@@ -15,24 +15,34 @@ export const pokemonTable = sqliteTable("pokemon", {
   sprite: text("sprite").notNull(),
 });
 
-export const pokemonTypesTable = sqliteTable(
-  "pokemon_types",
-  {
-    pokemonId: integer("pokemon_id")
-      .notNull()
-      .references(() => pokemonTable.id),
-    typeId: integer("type_id")
-      .notNull()
-      .references(() => typesTable.id),
-  },
-  // (table) => ({
-  //   compositePk: primaryKey(table.pokemonId, table.typeId),
-  // }),
-);
+export const pokemonTypesTable = sqliteTable("pokemon_types", {
+  pokemonId: integer("pokemon_id")
+    .notNull()
+    .references(() => pokemonTable.id),
+  typeId: integer("type_id")
+    .notNull()
+    .references(() => typesTable.id),
+});
 
 export const typesTable = sqliteTable("types", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
+});
+
+export const teamsTable = sqliteTable("teams", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => usersTable.id),
+});
+
+export const pokemonTeamsTable = sqliteTable("pokemon_teams", {
+  teamId: integer("team_id")
+    .notNull()
+    .references(() => teamsTable.id),
+  pokemonId: integer("pokemon_id")
+    .notNull()
+    .references(() => pokemonTable.id),
 });
 
 // NextAuth
