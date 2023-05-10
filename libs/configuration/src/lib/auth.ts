@@ -1,4 +1,4 @@
-import { DrizzleAdapter, db } from "@pokemon/db";
+import { DrizzleAdapter, db, teamsTable } from "@pokemon/db";
 import type { NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 
@@ -18,4 +18,9 @@ export const nextAuthOptions: NextAuthOptions = {
     newUser: "/",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  events: {
+    async createUser({ user }) {
+      db.insert(teamsTable).values({ userId: user.id });
+    },
+  },
 };
