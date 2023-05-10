@@ -25,7 +25,9 @@ export function UserButton({ user, ...props }: UserButtonProps) {
       <DropdownMenuTrigger>
         <Avatar className="h-6 w-6" {...props}>
           {user.image ? (
-            <AvatarImage alt="Picture" src={user.image} />
+            <div className="bg-gray-3 aspect-square h-full w-full">
+              <AvatarImage className="bg-gray-3" alt="Profile picture" src={user.image} />
+            </div>
           ) : (
             <AvatarFallback>
               <span className="sr-only">{user.name}</span>
