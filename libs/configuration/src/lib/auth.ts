@@ -7,6 +7,15 @@ export const nextAuthOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    session({ session, token }) {
+      if (session.user && token.sub) {
+        session.user.id = token.sub;
+      }
+
+      return session;
+    },
+  },
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -20,7 +29,9 @@ export const nextAuthOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   events: {
     async createUser({ user }) {
-      db.insert(teamsTable).values({ userId: user.id });
+      const team = db.insert(teamsTable).values({ userId: user.id }).returning().get();
+
+      console.log(`Created team: ${team.id}`);
     },
   },
 };
