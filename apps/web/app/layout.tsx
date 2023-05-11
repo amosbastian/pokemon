@@ -1,5 +1,5 @@
 import { BASE_URL, BRAND_DESCRIPTION, BRAND_NAME } from "@pokemon/configuration";
-import { PokeBalls, ThemeProvider } from "@pokemon/ui";
+import { ThemeProvider } from "@pokemon/ui";
 import { Header } from "@pokemon/ui/server";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -38,7 +38,6 @@ export default function RootLayout({
               {pokemonModal}
               {children}
               {signInModal}
-              <PokeBalls />
             </main>
           </div>
         </ThemeProvider>

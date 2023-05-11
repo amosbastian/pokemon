@@ -15,6 +15,7 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
+    serverActions: true,
     serverComponentsExternalPackages: ["better-sqlite3"],
   },
   images: {
