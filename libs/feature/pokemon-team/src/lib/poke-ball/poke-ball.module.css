@@ -1,0 +1,28 @@
+.pokeball {
+  background: linear-gradient(180deg, #ba0c2f 0%, #ba0c2f 48%, #262122 48%, #262122 52%, #fff 52%, #fff 100%);
+}
+
+.pokeball:before,
+.pokeball:after {
+  content: " ";
+  border-radius: 100%;
+  display: block;
+  position: absolute;
+}
+
+.pokeball:before {
+  background: #262122;
+  width: 25%;
+  height: 25%;
+  margin-top: 37.5%;
+  margin-left: 37.5%;
+}
+
+.pokeball:after {
+  background: #fff;
+  width: 12.5%;
+  height: 12.5%;
+  margin-top: 43.75%;
+  margin-left: 43.75%;
+  border: 1px #262122;
+}
