@@ -1,0 +1,1 @@
+ALTER TABLE pokemon_teams ADD `position` integer NOT NULL;

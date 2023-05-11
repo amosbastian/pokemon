@@ -5,7 +5,6 @@ export * from "./lib/dialog/dialog";
 export * from "./lib/github-button/github-button";
 export * from "./lib/input/input";
 export * from "./lib/intercept-dialog/intercept-dialog";
-export * from "./lib/poke-balls/poke-balls";
 export * from "./lib/pokemon-type/pokemon-type";
 export * from "./lib/pokemon-types-combo-box/pokemon-types-combo-box";
 export * from "./lib/search/search";

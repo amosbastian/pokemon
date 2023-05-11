@@ -96,6 +96,7 @@ export const getUserTeam = (userId: string) => {
     .select({
       team: teamsTable,
       pokemon: pokemonTable,
+      position: pokemonTeamsTable.position,
     })
     .from(teamsTable)
     .where(eq(teamsTable.userId, userId))
@@ -103,11 +104,12 @@ export const getUserTeam = (userId: string) => {
     .leftJoin(pokemonTable, eq(pokemonTable.id, pokemonTeamsTable.pokemonId))
     .all();
 
-  const pokemon = rows.reduce<Pokemon[]>((accumulator, row) => {
+  const pokemon = rows.reduce<(Pokemon & { position: number })[]>((accumulator, row) => {
     const pokemon = row.pokemon;
+    const position = row.position;
 
-    if (pokemon) {
-      accumulator.push(pokemon);
+    if (pokemon && position) {
+      accumulator.push({ ...pokemon, position });
     }
 
     return accumulator;

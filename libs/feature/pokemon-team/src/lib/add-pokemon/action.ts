@@ -8,6 +8,7 @@ const MAX_POKEMON = 6;
 const addPokemonSchema = zfd.formData({
   userId: zfd.text(z.string().min(1)),
   pokemonId: zfd.numeric(z.number().min(1)),
+  position: zfd.numeric(z.number().nullable()),
 });
 
 export async function addPokemon(formData: FormData) {
@@ -35,6 +36,11 @@ export async function addPokemon(formData: FormData) {
     throw new Error(`Pokemon with ID ${input.pokemonId} does not exist`);
   }
 
-  db.insert(pokemonTeamsTable).values({ pokemonId: input.pokemonId, teamId: team.id }).run();
+  if (!input.position) {
+    throw new Error("Something went wrong!");
+  }
+
+  db.insert(pokemonTeamsTable).values({ pokemonId: input.pokemonId, teamId: team.id, position: input.position }).run();
+
   revalidatePath("/");
 }

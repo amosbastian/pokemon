@@ -1,9 +1,10 @@
 import { db, getSinglePokemon, getUserTeam, pokemonTeamsTable } from "@pokemon/db";
 import { and, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
-const MIN_POKEMON = 6;
+const MIN_POKEMON = 0;
 
 const removePokemonSchema = zfd.formData({
   userId: zfd.text(z.string().min(1)),
@@ -38,4 +39,6 @@ export async function removePokemon(formData: FormData) {
   db.delete(pokemonTeamsTable)
     .where(and(eq(pokemonTeamsTable.pokemonId, input.pokemonId), eq(pokemonTeamsTable.teamId, team.id)))
     .run();
+
+  revalidatePath("/");
 }

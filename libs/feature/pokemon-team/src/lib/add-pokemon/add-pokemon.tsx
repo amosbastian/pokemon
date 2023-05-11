@@ -6,15 +6,17 @@ import { Submit } from "../submit/submit";
 interface AddPokemonProps {
   pokemonId: number;
   userId: string;
+  position?: number | null;
 }
 
-export function AddPokemon({ pokemonId, userId }: AddPokemonProps) {
+export function AddPokemon({ pokemonId, userId, position }: AddPokemonProps) {
   // I am doing it like this because I'm getting an error when trying with `zact` or
   // using `startTransition`: https://github.com/nrwl/nx/issues/16956
   return (
     <form className="z-10" action={addPokemon}>
       <input className="hidden" name="pokemonId" readOnly value={pokemonId} />
       <input className="hidden" name="userId" readOnly value={userId} />
+      {position ? <input className="hidden" name="position" readOnly value={position} /> : null}
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

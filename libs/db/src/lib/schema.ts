@@ -43,6 +43,7 @@ export const pokemonTeamsTable = sqliteTable("pokemon_teams", {
   pokemonId: integer("pokemon_id")
     .notNull()
     .references(() => pokemonTable.id),
+  position: integer("position").notNull(),
 });
 
 // NextAuth

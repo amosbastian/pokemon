@@ -9,6 +9,15 @@ import { AddPokemon } from "../add-pokemon/add-pokemon";
 import { PokeBalls } from "../poke-balls/poke-balls";
 import { RemovePokemon } from "../remove-pokemon/remove-pokemon";
 
+function getFirstEmptyPosition(positions: number[]): number | undefined {
+  const sequence = [1, 2, 3, 4, 5, 6];
+  for (let i = 0; i < sequence.length; i++) {
+    if (!positions.includes(sequence[i])) {
+      return sequence[i];
+    }
+  }
+}
+
 interface PokemonListProps {
   search?: string;
 }
@@ -20,6 +29,7 @@ export async function PokemonList({ search }: PokemonListProps) {
   const pokemon = getAllPokemon(search);
   const user = session && session.user;
   const team = user ? getUserTeam(user.id) : null;
+  const position = team ? getFirstEmptyPosition(team.pokemon.map((pokemon) => pokemon.position)) : null;
 
   return (
     <>
@@ -37,7 +47,7 @@ export async function PokemonList({ search }: PokemonListProps) {
                 <div className="flex gap-x-4">
                   <Image
                     className={`bg-gray-2 dark:bg-gray-4 h-12 w-12 flex-none rounded-full ${
-                      inTeam ? "border border-red-600" : ""
+                      inTeam ? "border border-blue-600" : ""
                     }`}
                     src={pokemon.sprite}
                     height={48}
@@ -60,7 +70,7 @@ export async function PokemonList({ search }: PokemonListProps) {
                 </div>
                 <div className="flex items-center gap-x-4">
                   {user ? (
-                    <Action pokemonId={pokemon.id} userId={user.id} />
+                    <Action pokemonId={pokemon.id} userId={user.id} position={position} />
                   ) : (
                     <ButtonLink href="/sign-in">Add Pokémon</ButtonLink>
                   )}
@@ -76,7 +86,7 @@ export async function PokemonList({ search }: PokemonListProps) {
           </li>
         )}
       </ul>
-      <PokeBalls />
+      <PokeBalls pokemon={team?.pokemon} />
     </>
   );
 }
