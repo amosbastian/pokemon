@@ -2,7 +2,7 @@ import * as Database from "better-sqlite3";
 import { InferModel, eq, placeholder, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import { pokemonTable, pokemonTypesTable, typesTable } from "./schema";
+import { pokemonTable, pokemonTeamsTable, pokemonTypesTable, teamsTable, typesTable } from "./schema";
 
 type Pokemon = InferModel<typeof pokemonTable>;
 type Type = InferModel<typeof typesTable>;
@@ -89,4 +89,32 @@ export const getAllPokemon = (search?: string) => {
   );
 
   return Object.values(reducedPokemonList);
+};
+
+export const getUserTeam = (userId: string) => {
+  const rows = db
+    .select({
+      team: teamsTable,
+      pokemon: pokemonTable,
+    })
+    .from(teamsTable)
+    .where(eq(teamsTable.userId, userId))
+    .leftJoin(pokemonTeamsTable, eq(pokemonTeamsTable.teamId, teamsTable.id))
+    .leftJoin(pokemonTable, eq(pokemonTable.id, pokemonTeamsTable.pokemonId))
+    .all();
+
+  const pokemon = rows.reduce<Pokemon[]>((accumulator, row) => {
+    const pokemon = row.pokemon;
+
+    if (pokemon) {
+      accumulator.push(pokemon);
+    }
+
+    return accumulator;
+  }, []);
+
+  return {
+    ...rows[0].team,
+    pokemon,
+  };
 };
