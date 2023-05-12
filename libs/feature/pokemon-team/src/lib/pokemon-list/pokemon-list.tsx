@@ -18,6 +18,13 @@ function getFirstEmptyPosition(positions: number[]): number | undefined {
   }
 }
 
+const fetchTeam = async (userId: string): Promise<ReturnType<typeof getUserTeam>> => {
+  const response = await fetch(`http://localhost:4200/api/team/${userId}`, { next: { tags: ["user-team"] } });
+  const json = await response.json();
+
+  return json.team;
+};
+
 interface PokemonListProps {
   search?: string;
 }
@@ -28,7 +35,8 @@ export async function PokemonList({ search }: PokemonListProps) {
 
   const pokemon = getAllPokemon(search);
   const user = session && session.user;
-  const team = user ? getUserTeam(user.id) : null;
+  const team = user ? await fetchTeam(user.id) : null;
+
   const position = team ? getFirstEmptyPosition(team.pokemon.map((pokemon) => pokemon.position)) : null;
 
   return (

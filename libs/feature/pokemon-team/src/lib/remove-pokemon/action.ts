@@ -1,6 +1,6 @@
 import { db, getSinglePokemon, getUserTeam, pokemonTeamsTable } from "@pokemon/db";
 import { and, eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
@@ -40,5 +40,5 @@ export async function removePokemon(formData: FormData) {
     .where(and(eq(pokemonTeamsTable.pokemonId, input.pokemonId), eq(pokemonTeamsTable.teamId, team.id)))
     .run();
 
-  revalidatePath("/");
+  revalidateTag("user-team");
 }

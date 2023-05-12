@@ -1,5 +1,5 @@
 import { db, getSinglePokemon, getUserTeam, pokemonTeamsTable } from "@pokemon/db";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
@@ -42,5 +42,5 @@ export async function addPokemon(formData: FormData) {
 
   db.insert(pokemonTeamsTable).values({ pokemonId: input.pokemonId, teamId: team.id, position: input.position }).run();
 
-  revalidatePath("/");
+  revalidateTag("user-team");
 }
