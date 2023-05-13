@@ -4,7 +4,7 @@ import { PokemonTypesComboBox, Search } from "@pokemon/ui";
 
 export default async function Page({ searchParams }: { searchParams: { search?: string } }) {
   const search = searchParams.search;
-  const types = db.select().from(typesTable).all();
+  const types = await db.select().from(typesTable).all();
 
   return (
     <>

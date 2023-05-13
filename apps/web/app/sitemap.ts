@@ -2,8 +2,8 @@ import { BASE_URL } from "@pokemon/configuration";
 import { getAllPokemon } from "@pokemon/db";
 import { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const allPokemon = getAllPokemon();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const allPokemon = await getAllPokemon();
 
   return [
     {

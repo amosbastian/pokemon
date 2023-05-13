@@ -14,7 +14,7 @@ const addPokemonSchema = zfd.formData({
 export async function addPokemon(formData: FormData) {
   "use server";
   const input = addPokemonSchema.parse(formData);
-  const team = getUserTeam(input.userId);
+  const team = await getUserTeam(input.userId);
 
   if (!team) {
     throw new Error(`Could not find user ${input.userId}'s team`);
@@ -30,7 +30,7 @@ export async function addPokemon(formData: FormData) {
     throw new Error(`${inTeam.name.charAt(0).toUpperCase() + inTeam.name.slice(1)} is already in your team`);
   }
 
-  const { pokemon } = getSinglePokemon(input.pokemonId) ?? {};
+  const { pokemon } = (await getSinglePokemon(input.pokemonId)) ?? {};
 
   if (!pokemon) {
     throw new Error(`Pokemon with ID ${input.pokemonId} does not exist`);

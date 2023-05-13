@@ -60,7 +60,7 @@ interface PokemonProps {
 }
 
 export async function Pokemon({ id }: PokemonProps) {
-  const { pokemon, types } = getSinglePokemon(id) ?? {};
+  const { pokemon, types } = (await getSinglePokemon(id)) ?? {};
 
   if (!pokemon || !types) {
     return null;

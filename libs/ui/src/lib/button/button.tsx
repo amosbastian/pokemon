@@ -68,7 +68,7 @@ type ButtonLinkProps = LinkProps & ButtonProps;
 
 const ButtonLink: React.FC<ButtonLinkProps> = ({ children, href, isLoading, ...rest }) => {
   return (
-    <Link href={href}>
+    <Link className="isolate" href={href}>
       <Button className="relative" {...rest}>
         {isLoading ? (
           <span className={`pointer-events-none ${styles.loading}`}>

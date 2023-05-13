@@ -21,7 +21,7 @@ export default async function Page({ params }: PageProps) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const ogUrl = new URL(`${BASE_URL}/api/og`);
 
-  const { pokemon, types } = getSinglePokemon(Number.parseInt(params.id, 10)) ?? {};
+  const { pokemon, types } = (await getSinglePokemon(Number.parseInt(params.id, 10))) ?? {};
 
   if (!pokemon || !types) {
     return {};
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams(): Promise<PageProps["params"][]> {
-  const pokemon = getAllPokemon();
+  const pokemon = await getAllPokemon();
 
   return pokemon.map(({ pokemon: { id } }) => ({
     id: `${id}`,

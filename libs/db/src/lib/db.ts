@@ -1,19 +1,25 @@
-import Database from "better-sqlite3";
+import "dotenv/config";
+
+import { createClient } from "@libsql/client";
 import { InferModel, eq, placeholder, sql } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
+import { drizzle } from "drizzle-orm/libsql";
+import { migrate } from "drizzle-orm/libsql/migrator";
 import { pokemonTable, pokemonTeamsTable, pokemonTypesTable, teamsTable, typesTable } from "./schema";
 
 type Pokemon = InferModel<typeof pokemonTable>;
 type Type = InferModel<typeof typesTable>;
 
-const sqlite = new Database("sqlite.db");
-export const db = drizzle(sqlite);
+const client = createClient({
+  url: process.env["DATABASE_URL"] as string,
+  authToken: process.env["DATABASE_AUTH_TOKEN"] as string,
+});
+
+export const db = drizzle(client);
 
 migrate(db, { migrationsFolder: "./libs/db/src/lib/drizzle" });
 
-export const getSinglePokemon = (id: number) => {
-  const rows = db
+export const getSinglePokemon = async (id: number) => {
+  const rows = await db
     .select({
       pokemon: pokemonTable,
       type: typesTable,
@@ -42,12 +48,12 @@ export const getSinglePokemon = (id: number) => {
   return result[id] ? result[id] : null;
 };
 
-export const getAllPokemon = (search?: string) => {
+export const getAllPokemon = async (search?: string) => {
   let pokemonList: { pokemon: Pokemon; type: Type | null }[];
 
   // TODO: figure out better where to do conditional .where()
   if (search) {
-    pokemonList = db
+    pokemonList = await db
       .select({
         pokemon: pokemonTable,
         type: typesTable,
@@ -59,7 +65,7 @@ export const getAllPokemon = (search?: string) => {
       .prepare()
       .all({ name: `%${search}%` });
   } else {
-    pokemonList = db
+    pokemonList = await db
       .select({
         pokemon: pokemonTable,
         type: typesTable,
@@ -91,8 +97,8 @@ export const getAllPokemon = (search?: string) => {
   return Object.values(reducedPokemonList);
 };
 
-export const getUserTeam = (userId: string) => {
-  const rows = db
+export const getUserTeam = async (userId: string) => {
+  const rows = await db
     .select({
       team: teamsTable,
       pokemon: pokemonTable,

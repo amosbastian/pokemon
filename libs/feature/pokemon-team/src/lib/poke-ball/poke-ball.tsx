@@ -7,7 +7,7 @@ import styles from "./poke-ball.module.css";
 
 interface PokeBallProps {
   mouseX: MotionValue;
-  pokemon?: ReturnType<typeof getUserTeam>["pokemon"][number];
+  pokemon?: Awaited<ReturnType<typeof getUserTeam>>["pokemon"][number];
 }
 
 export function PokeBall({ mouseX, pokemon }: PokeBallProps) {

@@ -14,7 +14,7 @@ const removePokemonSchema = zfd.formData({
 export async function removePokemon(formData: FormData) {
   "use server";
   const input = removePokemonSchema.parse(formData);
-  const team = getUserTeam(input.userId);
+  const team = await getUserTeam(input.userId);
 
   if (!team) {
     throw new Error(`Could not find user ${input.userId}'s team`);
@@ -30,7 +30,7 @@ export async function removePokemon(formData: FormData) {
     throw new Error(`This Pokemon is not in your team`);
   }
 
-  const { pokemon } = getSinglePokemon(input.pokemonId) ?? {};
+  const { pokemon } = (await getSinglePokemon(input.pokemonId)) ?? {};
 
   if (!pokemon) {
     throw new Error(`Pokemon with ID ${input.pokemonId} does not exist`);

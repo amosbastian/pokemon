@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useMotionValue } from "framer-motion";
 import { PokeBall } from "../poke-ball/poke-ball";
 
 interface PokeBallsProps {
-  pokemon?: ReturnType<typeof getUserTeam>["pokemon"];
+  pokemon?: Awaited<ReturnType<typeof getUserTeam>>["pokemon"];
 }
 
 export function PokeBalls({ pokemon = [] }: PokeBallsProps) {
@@ -17,7 +17,7 @@ export function PokeBalls({ pokemon = [] }: PokeBallsProps) {
       onMouseLeave={() => mouseX.set(Infinity)}
       className="bg-gray-1 dark:bg-gray-2 ring-gray-3 mx-auto flex h-16 items-end justify-center gap-4 rounded-2xl px-4 pb-3 shadow-sm ring-1"
     >
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false} mode="wait">
         {[...Array(6).keys()].map((i) => {
           const pokemonInPosition = pokemon.find((p) => p.position === i + 1);
           return <PokeBall key={i} mouseX={mouseX} pokemon={pokemonInPosition} />;

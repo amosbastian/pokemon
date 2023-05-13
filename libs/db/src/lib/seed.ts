@@ -94,12 +94,14 @@ export default async function seed() {
         continue;
       }
 
-      db.insert(typesTable)
+      await db
+        .insert(typesTable)
         .values({ id: typeId, name: type.name })
         .onConflictDoUpdate({ target: typesTable.id, set: { id: typeId, name: type.name } })
         .run();
 
-      db.insert(pokemonTypesTable)
+      await db
+        .insert(pokemonTypesTable)
         .values({ pokemonId: pokemonResponse.id, typeId })
         // .onConflictDoUpdate({
         //   target: [pokemonTypes.pokemonId, pokemonTypes.typeId],

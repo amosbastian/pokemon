@@ -1,7 +1,7 @@
 import { nextAuthOptions } from "@pokemon/configuration/server";
 import { getAllPokemon, getUserTeam } from "@pokemon/db";
 import { ButtonLink, PokemonType } from "@pokemon/ui";
-import { ChevronRightIcon, SearchIcon } from "lucide-react";
+import { ChevronRightIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,18 +33,19 @@ interface PokemonListProps {
 export async function PokemonList({ search }: PokemonListProps) {
   const session = await getServerSession(nextAuthOptions);
 
-  const pokemon = getAllPokemon(search);
+  const pokemon = await getAllPokemon(search);
   const user = session && session.user;
   const team = user ? await fetchTeam(user.id) : null;
+  const pokemonTeam = team ? team.pokemon ?? [] : null;
 
-  const position = team ? getFirstEmptyPosition(team.pokemon.map((pokemon) => pokemon.position)) : null;
+  const position = pokemonTeam ? getFirstEmptyPosition(pokemonTeam.map((pokemon) => pokemon.position)) : null;
 
   return (
     <>
       <ul className="divide-gray-3 dark:bg-gray-2 ring-gray-3 h-full max-h-full divide-y overflow-auto bg-white shadow-sm ring-1 sm:rounded-xl">
         {pokemon.length > 0 ? (
           pokemon.map(({ pokemon, types }) => {
-            const inTeam = team ? team.pokemon.find((teamPokemon) => teamPokemon.id === pokemon.id) : false;
+            const inTeam = pokemonTeam ? pokemonTeam.find((teamPokemon) => teamPokemon.id === pokemon.id) : false;
             const Action = inTeam ? RemovePokemon : AddPokemon;
 
             return (
@@ -80,7 +81,14 @@ export async function PokemonList({ search }: PokemonListProps) {
                   {user ? (
                     <Action pokemonId={pokemon.id} userId={user.id} position={position} />
                   ) : (
-                    <ButtonLink href="/sign-in">Add Pokémon</ButtonLink>
+                    <ButtonLink
+                      variant="ghost"
+                      href="/sign-in"
+                      className="group z-10 flex h-7 w-7 items-center justify-center rounded-md p-0 transition"
+                      aria-label="Add Pokémon"
+                    >
+                      <PlusIcon className="text-slate-11 group-hover:text-slate-12 h-4 w-4" />
+                    </ButtonLink>
                   )}
                   <ChevronRightIcon className="text-slate-11 h-5 w-5 flex-none" aria-hidden="true" />
                 </div>
