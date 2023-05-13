@@ -19,9 +19,9 @@ export default async function Page({ params }: PageProps) {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const ogUrl = new URL(`${BASE_URL}/api/og`);
-
   const { pokemon, types } = (await getSinglePokemon(Number.parseInt(params.id, 10))) ?? {};
+
+  const ogUrl = new URL(`${BASE_URL}/api/og?pokemonId=${params.id}`);
 
   if (!pokemon || !types) {
     return {};
