@@ -16,7 +16,9 @@ const client = createClient({
 
 export const db = drizzle(client);
 
-migrate(db, { migrationsFolder: "./libs/db/src/lib/drizzle" });
+if (process.env["NODE_ENV"] !== "production") {
+  migrate(db, { migrationsFolder: "./libs/db/src/lib/drizzle" });
+}
 
 export const getSinglePokemon = async (id: number) => {
   const rows = await db
