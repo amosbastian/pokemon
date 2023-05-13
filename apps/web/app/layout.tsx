@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     siteName: BRAND_NAME,
     images: [
       {
-        url: `${BASE_URL}/api/og?heading=Pokemon RSC`,
+        url: `${BASE_URL}/api/og?heading=Pokémon RSC`,
         width: 1200,
         height: 630,
       },

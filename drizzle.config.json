@@ -1,6 +1,5 @@
 {
   "schema": "./libs/db/src/lib/schema.ts",
-  "connectionString": "sqlite.db",
   "out": "./libs/db/src/lib/drizzle",
   "breakpoints": true
 }

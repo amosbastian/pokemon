@@ -21,7 +21,7 @@ export async function addPokemon(formData: FormData) {
   }
 
   if (team.pokemon.length >= 6) {
-    throw new Error(`You can have a maximum of ${MAX_POKEMON} Pokemon in your team!`);
+    throw new Error(`You can have a maximum of ${MAX_POKEMON} Pokémon in your team!`);
   }
 
   const inTeam = team.pokemon.find((pokemon) => pokemon.id === input.pokemonId);
@@ -33,7 +33,7 @@ export async function addPokemon(formData: FormData) {
   const { pokemon } = (await getSinglePokemon(input.pokemonId)) ?? {};
 
   if (!pokemon) {
-    throw new Error(`Pokemon with ID ${input.pokemonId} does not exist`);
+    throw new Error(`Pokémon with ID ${input.pokemonId} does not exist`);
   }
 
   if (!input.position) {

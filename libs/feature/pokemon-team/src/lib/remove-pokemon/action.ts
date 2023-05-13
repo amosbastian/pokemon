@@ -21,19 +21,19 @@ export async function removePokemon(formData: FormData) {
   }
 
   if (team.pokemon.length === MIN_POKEMON) {
-    throw new Error(`You don't have any Pokemon in your team!`);
+    throw new Error(`You don't have any Pokémon in your team!`);
   }
 
   const inTeam = team.pokemon.find((pokemon) => pokemon.id === input.pokemonId);
 
   if (!inTeam) {
-    throw new Error(`This Pokemon is not in your team`);
+    throw new Error(`This Pokémon is not in your team`);
   }
 
   const { pokemon } = (await getSinglePokemon(input.pokemonId)) ?? {};
 
   if (!pokemon) {
-    throw new Error(`Pokemon with ID ${input.pokemonId} does not exist`);
+    throw new Error(`Pokémon with ID ${input.pokemonId} does not exist`);
   }
 
   db.delete(pokemonTeamsTable)
