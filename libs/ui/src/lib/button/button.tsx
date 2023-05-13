@@ -11,13 +11,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-primary-400/10 dark:text-primary-400 dark:ring-1 dark:ring-inset dark:ring-primary-400/20 dark:hover:bg-primary-400/10 dark:hover:text-primary-300 dark:hover:ring-primary-300",
+          "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-gray-3 dark:text-gray-11 dark:ring-1 dark:ring-inset dark:ring-gray-6 dark:hover:bg-primary-400/10 dark:hover:text-gray-12 dark:hover:ring-gray-7",
         secondary:
-          "bg-zinc-100 text-gray-900 hover:bg-zinc-200 dark:bg-zinc-800/40 dark:text-gray-400 dark:ring-1 dark:ring-inset dark:ring-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-gray-300",
+          "bg-zinc-100 text-gray-12 hover:bg-zinc-200 dark:bg-zinc-800/40 dark:text-gray-400 dark:ring-1 dark:ring-inset dark:ring-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-gray-300",
         filled:
           "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-400",
         outline:
-          "text-gray-700 ring-1 ring-inset ring-zinc-900/10 hover:bg-zinc-900/2.5 hover:text-gray-900 dark:text-gray-400 dark:ring-white/10 dark:hover:bg-white/5 dark:hover:text-white",
+          "text-gray-11 ring-1 ring-inset ring-zinc-900/10 hover:bg-gray-3 hover:text-gray-12 dark:ring-white/10 dark:hover:bg-white/5 dark:hover:text-gray-12",
         text: "text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-500",
         ghost:
           "bg-transparent text-slate-12 hover:bg-slate-1 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent",

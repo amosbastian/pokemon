@@ -19,7 +19,12 @@ export function PokemonTypesComboBox({ types }: PokemonTypesComboBoxProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="h-full w-full justify-between">
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="h-full w-full justify-between font-normal"
+        >
           {id ? types.find((type) => type.id === id)?.name : "Select type..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
