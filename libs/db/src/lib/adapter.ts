@@ -1,5 +1,5 @@
 import { and, eq } from "drizzle-orm";
-import type { Adapter } from "next-auth/adapters";
+import type { Adapter, VerificationToken } from "next-auth/adapters";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./db";
 import { accountsTable, sessionsTable, usersTable, verificationTokensTable } from "./schema";
@@ -46,8 +46,8 @@ export function DrizzleAdapter(database: typeof db): Adapter {
         .returning()
         .get();
     },
-    linkAccount: (rawAccount) => {
-      const updatedAccount = database.insert(accountsTable).values(rawAccount).returning().get();
+    linkAccount: async (rawAccount) => {
+      const updatedAccount = await database.insert(accountsTable).values(rawAccount).returning().get();
 
       const account: ReturnType<Adapter["linkAccount"]> = {
         ...updatedAccount,
@@ -91,21 +91,19 @@ export function DrizzleAdapter(database: typeof db): Adapter {
     createVerificationToken: (verificationToken) => {
       return database.insert(verificationTokensTable).values(verificationToken).returning().get();
     },
-    useVerificationToken: (verificationToken) => {
+    useVerificationToken: async (verificationToken) => {
       try {
-        return (
-          database
-            .delete(verificationTokensTable)
-            .where(
-              and(
-                eq(verificationTokensTable.identifier, verificationToken.identifier),
-                eq(verificationTokensTable.token, verificationToken.token),
-              ),
-            )
-            .returning()
-            .get() ?? null
-        );
-      } catch (err) {
+        return (database
+          .delete(verificationTokensTable)
+          .where(
+            and(
+              eq(verificationTokensTable.identifier, verificationToken.identifier),
+              eq(verificationTokensTable.token, verificationToken.token),
+            ),
+          )
+          .returning()
+          .get() ?? null) as Promise<VerificationToken | null>;
+      } catch {
         throw new Error("No verification token found.");
       }
     },

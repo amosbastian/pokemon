@@ -5,7 +5,7 @@ import * as z from "zod";
 const WIDTH = 800;
 const HEIGHT = 400;
 
-export const ColorMap: Record<string, string> = {
+const ColorMap: Record<string, string> = {
   normal: "bg-neutral-500 dark:bg-neutral-400",
   fighting: "bg-orange-500 dark:bg-orange-400",
   flying: "bg-sky-500 dark:bg-sky-400",
@@ -31,7 +31,7 @@ type Type = {
   name: string;
 };
 
-export const PokemonType = ({ type }: { type: Type }) => {
+const PokemonType = ({ type }: { type: Type }) => {
   return (
     <span
       key={type.id}

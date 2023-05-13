@@ -29,7 +29,7 @@ export const nextAuthOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   events: {
     async createUser({ user }) {
-      const team = db.insert(teamsTable).values({ userId: user.id }).returning().get();
+      const team = await db.insert(teamsTable).values({ userId: user.id }).returning().get();
 
       console.log(`Created team: ${team.id}`);
     },
