@@ -1,5 +1,5 @@
 "use client";
-
+// Check https://buildui.com/recipes/magnified-dock for an explanation
 import { getUserTeam } from "@pokemon/db";
 import { AnimatePresence, motion, useMotionValue } from "framer-motion";
 import { PokeBall } from "../poke-ball/poke-ball";

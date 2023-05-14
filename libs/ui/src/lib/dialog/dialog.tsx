@@ -1,5 +1,5 @@
 "use client";
-
+// Adapted from https://github.com/shadcn/ui
 import { classnames } from "@pokemon/utility/shared";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";

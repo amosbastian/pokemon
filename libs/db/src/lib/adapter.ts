@@ -1,3 +1,4 @@
+// Most of the code is taken from: https://github.com/nextauthjs/next-auth/pull/7165
 import { and, eq } from "drizzle-orm";
 import type { Adapter, VerificationToken } from "next-auth/adapters";
 import { v4 as uuidv4 } from "uuid";

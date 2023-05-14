@@ -1,3 +1,4 @@
+// Adapted from https://github.com/shadcn/ui
 import * as React from "react";
 import { classnames } from "@pokemon/utility/shared";
 import styles from "../loading-dots.module.css";

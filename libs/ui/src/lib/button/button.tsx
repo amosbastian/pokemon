@@ -1,3 +1,4 @@
+// Adapted from https://github.com/shadcn/ui
 import { classnames } from "@pokemon/utility/shared";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
