@@ -17,7 +17,7 @@ const buttonVariants = cva(
         filled:
           "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-primary-500 dark:text-white dark:hover:bg-primary-400",
         outline:
-          "text-gray-11 ring-1 ring-inset ring-zinc-900/10 hover:bg-gray-3 hover:text-gray-12 dark:ring-white/10 dark:hover:bg-white/5 dark:hover:text-gray-12",
+          "text-gray-11 border border-gray-6 hover:bg-gray-1 hover:text-gray-12 dark:hover:bg-gray-3 dark:hover:text-gray-12",
         text: "text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-500",
         ghost:
           "bg-transparent text-slate-12 hover:bg-slate-1 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent",

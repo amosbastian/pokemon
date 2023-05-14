@@ -2,19 +2,41 @@
 
 import { classnames } from "@pokemon/utility/shared";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 import { Button } from "../button/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../command/command";
+import styles from "../loading-dots.module.css";
 import { ColorMap } from "../pokemon-type/pokemon-type";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover/popover";
 
 interface PokemonTypesComboBoxProps {
+  defaultValue?: string;
   types: { id: number; name: string }[];
 }
 
-export function PokemonTypesComboBox({ types }: PokemonTypesComboBoxProps) {
+export function PokemonTypesComboBox({ defaultValue, types }: PokemonTypesComboBoxProps) {
   const [open, setOpen] = React.useState(false);
-  const [id, setValue] = React.useState<number | null>(null);
+  const [value, setValue] = React.useState<string | undefined>(defaultValue);
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = React.useTransition();
+
+  const onSelect = (newValue: string) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (newValue === value) {
+      searchParams.delete("type");
+      setValue(undefined);
+    } else {
+      searchParams.set("type", newValue);
+      setValue(newValue);
+    }
+    setOpen(false);
+
+    startTransition(() => {
+      replace(`${pathname}?${searchParams.toString()}`);
+    });
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -23,10 +45,18 @@ export function PokemonTypesComboBox({ types }: PokemonTypesComboBoxProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="h-full w-full justify-between font-normal"
+          className="relative h-full w-full justify-between font-normal capitalize"
         >
-          {id ? types.find((type) => type.id === id)?.name : "Select type..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {value ? types.find((type) => type.name === value)?.name : "Select type..."}
+          {isPending ? (
+            <span className={`pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 ${styles.loading}`}>
+              <span style={{ backgroundColor: "hsl(var(--primary))" }} />
+              <span style={{ backgroundColor: "hsl(var(--primary))" }} />
+              <span style={{ backgroundColor: "hsl(var(--primary))" }} />
+            </span>
+          ) : (
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
@@ -36,15 +66,12 @@ export function PokemonTypesComboBox({ types }: PokemonTypesComboBoxProps) {
           <CommandGroup>
             {types.map((type) => (
               <CommandItem
+                value={type.name}
                 key={type.id}
-                onSelect={(currentValue) => {
-                  const parsedValue = Number.parseInt(currentValue, 10);
-                  setValue(parsedValue === id ? null : parsedValue);
-                  setOpen(false);
-                }}
+                onSelect={onSelect}
                 className="flex flex-row items-center gap-2 capitalize"
               >
-                <Check className={classnames("h-4 w-4", id === type.id ? "opacity-100" : "opacity-0")} />
+                <Check className={classnames("h-4 w-4", value === type.name ? "opacity-100" : "opacity-0")} />
                 <svg className={`h-1.5 w-1.5 ${ColorMap[type.name]}`} viewBox="0 0 6 6" aria-hidden="true">
                   <circle cx={3} cy={3} r={3} />
                 </svg>

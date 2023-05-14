@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 import { createClient } from "@libsql/client";
-import { InferModel, eq, placeholder, sql } from "drizzle-orm";
+import { InferModel, and, eq, placeholder, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/libsql";
 import { migrate } from "drizzle-orm/libsql/migrator";
 import { pokemonTable, pokemonTeamsTable, pokemonTypesTable, teamsTable, typesTable } from "./schema";
@@ -50,32 +50,39 @@ export const getSinglePokemon = async (id: number) => {
   return result[id] ? result[id] : null;
 };
 
-export const getAllPokemon = async (search?: string) => {
+interface GetAllPokemonParams {
+  search?: string;
+  type?: string;
+}
+
+export const getAllPokemon = async (params?: GetAllPokemonParams) => {
+  const { search, type } = params ?? {};
+
   let pokemonList: { pokemon: Pokemon; type: Type | null }[];
+
+  let query = db
+    .select({
+      pokemon: pokemonTable,
+      type: typesTable,
+    })
+    .from(pokemonTable)
+    .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
+    .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id));
+
+  if (type) {
+    query = query.where(eq(typesTable.name, type));
+  }
 
   // TODO: figure out better where to do conditional .where()
   if (search) {
-    pokemonList = await db
-      .select({
-        pokemon: pokemonTable,
-        type: typesTable,
-      })
-      .from(pokemonTable)
-      .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
-      .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id))
-      .where(sql`lower(${pokemonTable.name}) like ${placeholder("name")}`)
-      .prepare()
-      .all({ name: `%${search}%` });
+    if (type) {
+      query = query.where(and(sql`lower(${pokemonTable.name}) like ${placeholder("name")}`, eq(typesTable.name, type)));
+    } else {
+      query = query.where(sql`lower(${pokemonTable.name}) like ${placeholder("name")}`);
+    }
+    pokemonList = await query.prepare().all({ name: `%${search}%` });
   } else {
-    pokemonList = await db
-      .select({
-        pokemon: pokemonTable,
-        type: typesTable,
-      })
-      .from(pokemonTable)
-      .leftJoin(pokemonTypesTable, eq(pokemonTypesTable.pokemonId, pokemonTable.id))
-      .leftJoin(typesTable, eq(pokemonTypesTable.typeId, typesTable.id))
-      .all();
+    pokemonList = await query.all();
   }
 
   const reducedPokemonList = pokemonList.reduce<Record<number, { pokemon: Pokemon; types: Type[] }>>(

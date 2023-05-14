@@ -27,13 +27,14 @@ const fetchTeam = async (userId: string): Promise<ReturnType<typeof getUserTeam>
 
 interface PokemonListProps {
   search?: string;
+  type?: string;
 }
 
 // React server components are async so you make database or API calls.
-export async function PokemonList({ search }: PokemonListProps) {
+export async function PokemonList({ search, type }: PokemonListProps) {
   const session = await getServerSession(nextAuthOptions);
 
-  const pokemon = await getAllPokemon(search);
+  const pokemon = await getAllPokemon({ search, type });
   const user = session && session.user;
   const team = user ? await fetchTeam(user.id) : null;
   const pokemonTeam = team ? team.pokemon ?? [] : null;
