@@ -16,7 +16,6 @@
     "@radix-ui/react-tooltip": "^1.0.5",
     "@swc/helpers": "~0.5.1",
     "@tw-classed/react": "^1.4.4",
-    "@vercel/og": "^0.5.4",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",

@@ -21,16 +21,12 @@ export default async function Page({ params }: PageProps) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { pokemon, types } = (await getSinglePokemon(Number.parseInt(params.id, 10))) ?? {};
 
-  const ogUrl = new URL(`${BASE_URL}/api/og?pokemonId=${params.id}`);
-
   if (!pokemon || !types) {
     return {};
   }
 
   const title = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
   const description = `HP: ${pokemon.hp}. Attack: ${pokemon.attack}. Defense: ${pokemon.defense}. Special attack: ${pokemon.specialAttack}. Special defense: ${pokemon.specialDefense}. Speed: ${pokemon.speed}.`;
-
-  ogUrl.searchParams.set("pokemon", title);
 
   return {
     title,
@@ -39,21 +35,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: `${BASE_URL}/pokemon/${params.id}`,
-      images: [
-        {
-          url: ogUrl.toString(),
-          width: 1200,
-          height: 630,
-          alt: pokemon.name,
-        },
-      ],
       tags: types.map((type) => type.name),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogUrl.toString()],
     },
   };
 }
