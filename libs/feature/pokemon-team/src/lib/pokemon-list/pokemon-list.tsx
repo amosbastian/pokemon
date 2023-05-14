@@ -1,3 +1,4 @@
+import { BASE_URL } from "@pokemon/configuration";
 import { nextAuthOptions } from "@pokemon/configuration/server";
 import { getAllPokemon, getUserTeam } from "@pokemon/db";
 import { ButtonLink, PokemonType } from "@pokemon/ui";
@@ -19,7 +20,7 @@ function getFirstEmptyPosition(positions: number[]): number | undefined {
 }
 
 const fetchTeam = async (userId: string): Promise<ReturnType<typeof getUserTeam>> => {
-  const response = await fetch(`http://localhost:4200/api/team/${userId}`, { next: { tags: ["user-team"] } });
+  const response = await fetch(`${BASE_URL}/api/team/${userId}`, { next: { tags: ["user-team"] } });
   const json = await response.json();
 
   return json.team;
