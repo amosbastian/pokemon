@@ -89,7 +89,7 @@ const StatisticBar = ({ statistic, value }: { statistic: Statistic; value: numbe
           </div>
         </div>
       </dt>
-      <dd tw="text-white dark:text-white ml-1 w-10 text-right text-sm ml-4">{value}</dd>
+      <dd tw="text-white dark:text-white w-10 text-right text-sm ml-4 mr-12">{value}</dd>
     </div>
   );
 };
@@ -107,7 +107,7 @@ async function handler({ params }: { params: { id: string } }) {
 
       return new ImageResponse(
         (
-          <div tw="flex w-full flex-col gap-4 p-4 pr-0 text-white bg-zinc-900">
+          <div tw="flex w-full flex-col gap-4 py-4 px-12 pr-0 text-white bg-zinc-900">
             <div tw="flex flex-row">
               <img
                 tw="bg-gray-300 dark:bg-gray-4 h-16 w-16 flex-none rounded-full"
