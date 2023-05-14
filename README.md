@@ -14,7 +14,7 @@ I built this project to play around with server actions as well as server compon
 > **Warning**
 > This app is using server actions, which are in alpha, and do not (yet) have the best UX or DX.
 > **Expect to see some jank when playing around with the app**.
-> As for a personal recommendation, I'd stick to something like tRPC for now and wait until they improve things.
+> As for a personal recommendation, I'd stick to something like tRPC for now and wait until they improve things in the future.
 
 ## Some highlights
 
@@ -25,14 +25,14 @@ I built this project to play around with server actions as well as server compon
 - Using **[Turso](https://turso.tech/)** for the database
 - **TypeScript**
 
-## Known Issues
+## Known issues
 
 A list of things not working right now:
 
 1. Constant warnings in the terminal, probably caused by Nx
 2. Loading state when adding / removing Pokémon is janky because of server actions
 
-## Running Locally
+## Running locally
 
 1. Install dependencies using npm:
 2. Copy `.env.example` to `.env` and update the variables (you will need to [set up GitHub OAuth](https://github.com/settings/developers))
