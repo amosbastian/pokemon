@@ -10,7 +10,7 @@ export async function GET(
   },
 ) {
   const userId = params.userId;
-  const team = getUserTeam(userId);
+  const team = await getUserTeam(userId);
 
   return NextResponse.json({ team });
 }
