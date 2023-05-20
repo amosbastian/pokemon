@@ -75,6 +75,7 @@ export async function Pokemon({ id }: PokemonProps) {
           height={48}
           width={48}
           alt=""
+          unoptimized
         />
         <div className="min-w-0 flex-auto">
           <div className="flex items-center gap-x-2 leading-5">

@@ -64,6 +64,7 @@ export async function PokemonList({ search, type }: PokemonListProps) {
                     height={48}
                     width={48}
                     alt=""
+                    unoptimized
                   />
                   <div className="min-w-0 flex-auto">
                     <p className="text-slate-12 text-sm font-semibold capitalize leading-6">
